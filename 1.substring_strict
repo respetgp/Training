@@ -1,0 +1,29 @@
+# Задача. Найти подстроку (пример ab, abc) в строке (пример axcxbxcb). В соответствии с порядком символов
+
+import nltk
+
+def is_string_in_symbols(s1, s2):
+    result = False
+    summ_str = ''
+    count = 0
+    s1_list = list(s1)
+    s2_list = list(s2)
+    for i in range(0, len(s2)):
+        if s2_list[i] in s1_list:
+            summ_str = summ_str + s2_list[i]
+            if s1 == summ_str:
+                result = True
+
+            distance = nltk.edit_distance(summ_str, s1)
+            raticio = distance / len(s1)
+            if raticio < 0.50:
+                result = True
+    return result
+
+
+assert is_string_in_symbols('ab', 'acb') == True
+assert is_string_in_symbols('ab', 'abb') == True
+assert is_string_in_symbols('ab', 'axxbxb') == True
+assert is_string_in_symbols('abc', 'axcxbxcb') == True
+assert is_string_in_symbols('abc', 'aebc') == True
+assert is_string_in_symbols('ab', 'bba') == False
